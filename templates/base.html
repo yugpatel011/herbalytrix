@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HERBALYTRIX Care</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.jpg') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        :root {
+            --herbal-primary: #14532d;
+            --herbal-accent:  #86efac;
+            --herbal-cream:   #fef9c3;
+        }
+        * { box-sizing: border-box; }
+        body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+}
+footer {
+    background: #1b5e20;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+.main-content {
+    flex: 1;
+}
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: #0f172a;
+            background:
+                radial-gradient(circle at top left, rgba(134,239,172,0.18), transparent 55%),
+                radial-gradient(circle at bottom right, rgba(254,249,195,0.22), transparent 55%),
+                #f3f4f6;
+            min-height: 100vh;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            backdrop-filter: blur(12px);
+            background: linear-gradient(to right, rgba(20,83,45,0.95), rgba(20,83,45,0.92));
+            color: #f9fafb;
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(148,163,184,0.3);
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .brand-logo {
+            width: 34px;
+            height: 34px;
+            border-radius: 999px;
+            background: radial-gradient(circle at 30% 20%, var(--herbal-accent), var(--herbal-primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .brand-logo-img {
+            width: 28px;
+            height: auto;
+            display: block;
+        }
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+        .brand-title {
+            font-weight: 700;
+            letter-spacing: 0.03em;
+        }
+        .brand-sub {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+        }
+        header a {
+            color: #e5fdf0;
+            text-decoration: none;
+            padding: 0.35rem 0.75rem;
+            border-radius: 999px;
+            transition: background 0.18s ease, transform 0.1s ease;
+        }
+        header a:hover {
+            background: rgba(134,239,172,0.16);
+            transform: translateY(-1px);
+        }
+        header span {
+            color: #bbf7d0;
+            font-size: 0.8rem;
+            margin-right: 0.25rem;
+        }
+
+        .outer-shell {
+            max-width: 1080px;
+            margin: 2rem auto 2.5rem;
+            padding: 0 1rem;
+        }
+        .container {
+            background: linear-gradient(135deg, #ffffff, #fefce8);
+            border-radius: 24px;
+            padding: 1.7rem 1.8rem;
+            box-shadow:
+                0 18px 45px rgba(15,23,42,0.12),
+                0 0 0 1px rgba(148,163,184,0.2);
+            border: 1px solid rgba(190,242,100,0.5);
+        }
+        .flash {
+            background: rgba(134,239,172,0.18);
+            color: #166534;
+            padding: 0.75rem 1rem;
+            border-radius: 14px;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(22,163,74,0.32);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .flash::before { content: "🌿"; }
+
+        .btn {
+            padding: 0.6rem 1.4rem;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            text-decoration: none;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--herbal-primary), #15803d);
+            color: white;
+            box-shadow: 0 10px 20px rgba(22,101,52,0.38);
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #166534, #16a34a);
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background: rgba(15,23,42,0.03);
+            color: #0f172a;
+            border: 1px solid rgba(148,163,184,0.5);
+        }
+        .btn-secondary:hover {
+            background: rgba(148,163,184,0.15);
+        }
+
+        .flex { display: flex; gap: 2rem; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.9);
+            border-radius: 18px;
+            padding: 1rem;
+            border: 1px solid rgba(209,213,219,0.8);
+            box-shadow: 0 10px 20px rgba(15,23,42,0.06);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 0.55rem 0.75rem;
+            border-radius: 12px;
+            border: 1px solid rgba(148,163,184,0.9);
+            font-size: 0.9rem;
+            margin: 0.22rem 0 0.85rem;
+            background: rgba(255,255,255,0.88);
+            transition: border 0.15s, box-shadow 0.15s, background 0.15s;
+        }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--herbal-primary);
+            box-shadow: 0 0 0 1px rgba(22,163,74,0.7), 0 0 0 4px rgba(187,247,208,0.7);
+            background: #ffffff;
+        }
+        label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+        }
+        thead {
+            background: var(--herbal-primary);
+            color: #e5fdf0;
+        }
+        th, td {
+            padding: 0.55rem 0.6rem;
+            border-bottom: 1px solid rgba(209,213,219,0.8);
+            vertical-align: top;
+        }
+        tbody tr:nth-child(odd) { background: #f9fafb; }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.4rem;
+            }
+            nav { flex-wrap: wrap; }
+            .container { padding: 1.3rem 1.1rem; border-radius: 20px; }
+            .flex { flex-direction: column; }
+        }
+        .checkout-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #f6fff5;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.08);
+}
+
+.payment-box input {
+    width: 100%;
+    padding: 10px;
+    margin: 6px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.btn-cod {
+    width: 100%;
+    padding: 12px;
+    background: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.btn-upi {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    padding: 12px;
+    background: #1565c0;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 16px;
+}
+.upi-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 25px;
+    background: #f4fff4;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+.btn-upi-pay {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 14px 25px;
+    background: #2e7d32;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.upi-qr {
+    width: 220px;
+    margin-top: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.upi-note {
+    color: gray;
+    font-size: 14px;
+}
+
+
+    </style>
+</head>
+<body>
+<header>
+    <div class="brand">
+        <div class="brand-logo">
+            <img src="{{ url_for('static', filename='logo.jpg') }}"
+                 alt="HERBALYTRIX Logo"
+                 class="brand-logo-img">
+        </div>
+        <div class="brand-text">
+            <span class="brand-title">HERBALYTRIX Care</span>
+            <span class="brand-sub">Herbal, sulphate-free hair care</span>
+        </div>
+    </div>
+
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('cart') }}">Cart</a>
+
+        {% if session.get('user_id') %}
+            <span>Hi, {{ session.get('user_name') }}</span>
+            <a href="{{ url_for('user_logout') }}">Logout</a>
+        {% else %}
+            <a href="{{ url_for('user_login') }}">User Login</a>
+            <a href="{{ url_for('user_register') }}">Register</a>
+        {% endif %}
+
+        <a href="{{ url_for('admin_login') }}">Admin</a>
+    </nav>
+</header>
+
+<div class="outer-shell">
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for m in messages %}
+                    <div class="flash">{{ m }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+</div>
+    <!-- FOOTER -->
+    {% include "footer.html" %}
+
+</body>
+</html>
+</body>
+</html>
+

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Login with Gmail (OTP)</h2>
+<p>Enter your Gmail address. We will send a one-time code (OTP) to this email to sign you in.</p>
+
+<form method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label for="email">Gmail address</label>
+  <input id="email" name="email" type="email" placeholder="you@gmail.com" required>
+  <button class="btn btn-primary" type="submit">Send OTP</button>
+</form>
+{% endblock %}

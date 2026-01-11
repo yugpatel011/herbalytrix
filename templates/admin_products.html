@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1rem;">
+    <h2 style="margin:0;">Products</h2>
+    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+        <a href="{{ url_for('admin_product_new') }}" class="btn btn-primary">+ New product</a>
+        <a href="{{ url_for('admin_orders') }}" class="btn btn-secondary">View orders</a>
+        <a href="{{ url_for('admin_logout') }}" class="btn btn-secondary">Logout</a>
+    </div>
+</div>
+
+{% if products %} 
+<div class="table-responsive">
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Product</th>
+            <th>Price (₹)</th>
+            <th>ML</th>
+            <th>Stock</th>
+            <th>Active</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in products %}
+        <tr>
+            <td>{{ p.id }}</td>
+            <td>
+                <div style="font-weight:600;">{{ p.name }}</div>
+                <div style="font-size:0.8rem;color:#6b7280;">{{ p.description[:70] }}{% if p.description|length > 70 %}...{% endif %}</div>
+            </td>
+            <td>{{ p.price }}</td>
+            <td>{{ p.ml }}</td>
+            <td>{{ p.stock }}</td>
+            <td>
+                {% if p.is_active %}
+                    <span style="font-size:0.8rem;color:#16a34a;">Yes</span>
+                {% else %}
+                    <span style="font-size:0.8rem;color:#b91c1c;">No</span>
+                {% endif %}
+            </td>
+            <td style="white-space:nowrap;">
+                <a href="{{ url_for('product_detail', product_id=p.id) }}" class="btn btn-secondary"
+                   style="padding:0.25rem 0.7rem;font-size:0.75rem;margin-right:0.2rem;">
+                    View
+                </a>
+                <a href="{{ url_for('admin_product_edit', product_id=p.id) }}" class="btn btn-secondary"
+                   style="padding:0.25rem 0.7rem;font-size:0.75rem;margin-right:0.2rem;">
+                    Edit
+                </a>
+                <form method="post" action="{{ url_for('admin_product_delete', product_id=p.id) }}"
+                      style="display:inline;" onsubmit="return confirm('Delete this product?');">
+                      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                    <button type="submit" class="btn btn-secondary"
+                            style="padding:0.25rem 0.7rem;font-size:0.75rem;">
+                        Delete
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% else %}
+<p>No products found. Click “New product” to add one.</p>
+{% endif %}
+
+{% endblock %}
