@@ -1,0 +1,43 @@
+
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Herbal Shampoos</h2>
+<p style="font-size:0.9rem;color:#4b5563;margin-bottom:1rem;">
+    Clean, gentle and plant-powered care for your hair.
+</p>
+
+{% if products %}
+<div class="grid">
+    {% for p in products %}
+    <div class="card">
+        <img src="{{ url_for('static', filename='shampoo.jpg')}}" alt="{{ HERBALYTRIX }}" style="width:100%;height:60%; ">
+
+        <h3 style="margin:0 0 0.3rem;font-size:1rem;">{{ p.name }}</h3>
+        <p style="margin:0;font-size:0.85rem;color:#6b7280;">{{ p.ml }} ml</p>
+        <p style="margin:0.3rem 0;font-weight:600;color:#14532d;">₹{{ p.price }}</p>
+        {% if p.stock > 0 %}
+            <p style="font-size:0.8rem;color:#16a34a;">In stock ({{ p.stock }})</p>
+        {% else %}
+            <p style="font-size:0.8rem;color:#b45309;">Out of stock</p>
+        {% endif %}
+        <div style="margin-top:0.6rem;display:flex;gap:0.4rem;">
+            <a href="{{ url_for('product_detail', product_id=p.id) }}" class="btn btn-secondary">View</a>
+            {% if p.stock > 0 %}
+            <form method="post" action="{{ url_for('add_to_cart', product_id=p.id) }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <input type="hidden" name="quantity" value="1">
+                <button class="btn btn-primary" type="submit">Add to cart</button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% else %}
+<p>No products yet. Login as admin and add some.</p>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,26 @@
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<button id="pay-btn">Pay with UPI</button>
+
+<script>
+var options = {
+    "key": "{{ razorpay_key }}",
+    "amount": "{{ amount * 100 }}",
+    "currency": "INR",
+    "name": "HERBALYTRIX Care",
+    "description": "Herbal Shampoo",
+    "order_id": "{{ order_id }}",
+    "handler": function (response){
+        window.location.href = "/payment_success?payment_id=" + response.razorpay_payment_id;
+    },
+    "method": {
+        "upi": true
+    }
+};
+
+var rzp = new Razorpay(options);
+document.getElementById('pay-btn').onclick = function(e){
+    rzp.open();
+    e.preventDefault();
+}
+</script>
