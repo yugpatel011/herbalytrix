@@ -24,6 +24,7 @@ from io import BytesIO
 from base64 import b64encode
 
 
+
 # --- read envs (already have load_dotenv earlier) ---
 EMAIL_HOST = os.environ.get("EMAIL_HOST", "smtp.gmail.com")
 EMAIL_PORT = int(os.environ.get("EMAIL_PORT", 587))
@@ -845,6 +846,12 @@ def payment_success():
     db.session.commit()
 
     return render_template("success.html", payment_id=payment_id)
+
+limiter = Limiter(
+    app,
+    key_func=get_remote_address,
+    default_limits=["200 per day", "50 per hour"]
+)
 
 
 
