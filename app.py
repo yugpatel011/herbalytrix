@@ -847,11 +847,15 @@ def payment_success():
 
     return render_template("success.html", payment_id=payment_id)
 
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+
 limiter = Limiter(
-    app,
     key_func=get_remote_address,
     default_limits=["200 per day", "50 per hour"]
 )
+
+limiter.init_app(app)
 
 
 
